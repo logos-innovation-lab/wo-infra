@@ -1,0 +1,7 @@
+ds-test/=lib/solmate/lib/ds-test/src/
+erc4626-tests/=lib/wo-splitter/lib/openzeppelin-contracts/lib/erc4626-tests/
+forge-std/=lib/forge-std/src/
+openzeppelin-contracts/=lib/wo-splitter/lib/openzeppelin-contracts/
+openzeppelin/=lib/wo-splitter/lib/openzeppelin-contracts/contracts/
+solmate/=lib/solmate/src/
+wo-splitter/=lib/wo-splitter/src/
