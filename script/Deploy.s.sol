@@ -13,25 +13,30 @@ import {MockERC20} from "solmate/test/utils/mocks/MockERC20.sol";
 import {SplitterFactory} from "wo-splitter/SplitterFactory.sol";
 
 contract DeployScript is Script {
+    bytes32 salt;
+
     function run() public {
         vm.startBroadcast();
 
-        CREATE3Factory factory = new CREATE3Factory{
-            salt: keccak256(bytes("create3-factory"))
-        }();
+        // Deploy factory
+        console.log("Deploying factory");
+        salt = keccak256(bytes("create3-factory"));
+        CREATE3Factory factory = new CREATE3Factory{salt: salt}();
 
+        // Deploy DAI
+        salt = keccak256(bytes("erc20-dai"));
+        console.log("Deploying DAI to", factory.getDeployed(salt));
         factory.deploy(
-            keccak256(bytes("erc20-dai")),
+            salt,
             abi.encodePacked(
                 type(MockERC20).creationCode,
                 abi.encode("DAI", "DAI", 18)
             )
         );
 
-        factory.deploy(
-            keccak256(bytes("splitter-factory")),
-            type(SplitterFactory).creationCode
-        );
+        salt = keccak256(bytes("splitter-factory"));
+        console.log("Deploying SplitterFactory to", factory.getDeployed(salt));
+        factory.deploy(salt, type(SplitterFactory).creationCode);
 
         vm.stopBroadcast();
     }
