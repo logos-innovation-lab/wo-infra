@@ -18,6 +18,8 @@ done
 
 # Run the scripts
 echo "Deploying everything"
+git config --global --add safe.directory /contracts
+forge update
 forge script \
     script/Deploy.s.sol:DeployScript \
     --private-key $PRIVATE_KEY \
